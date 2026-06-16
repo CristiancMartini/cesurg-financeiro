@@ -276,22 +276,26 @@
 
       table { font-size: 0.925rem; }
 
-      thead th {
-        font-size: 0.85rem;
-        white-space: normal;
-        padding: 0.7rem 0.65rem;
+      .table-wrap {
+        padding-bottom: 36px;
+        border-width: 2px;
+        box-shadow: inset -16px 0 14px -12px rgba(12, 35, 64, 0.07);
       }
 
-      tbody td {
-        padding: 0.7rem 0.65rem;
-        word-break: break-word;
-        overflow-wrap: anywhere;
+      .table-wrap::after { display: flex; }
+
+      thead th,
+      tbody td,
+      tbody td.num,
+      tfoot td {
+        white-space: nowrap;
+        word-break: normal;
+        overflow-wrap: normal;
       }
 
-      tbody td.num {
-        font-size: 0.875rem;
-        white-space: normal;
-      }
+      thead th { font-size: 0.85rem; padding: 0.75rem 1rem; }
+      tbody td { padding: 0.75rem 1rem; }
+      tbody td.num { font-size: 0.875rem; }
 
       .tag { font-size: 0.75rem; }
 
@@ -517,17 +521,55 @@
 
     /* ── Tables ── */
     .table-wrap {
+      position: relative;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       max-width: 100%;
       margin: 1rem 0;
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
+      scrollbar-width: thin;
+      scrollbar-color: var(--navy-mid) var(--line);
+    }
+
+    .table-wrap::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .table-wrap::-webkit-scrollbar-track {
+      background: var(--line);
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: var(--navy-mid);
+      border-radius: 5px;
+      border: 2px solid var(--line);
+    }
+
+    .table-wrap::after {
+      content: "← Deslize para ver mais →";
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      background: linear-gradient(to bottom, #f8fafc, #eef2f7);
+      border-top: 1px dashed var(--line-strong);
+      pointer-events: none;
     }
 
     table {
-      width: 100%;
-      max-width: 100%;
+      width: max-content;
+      min-width: 100%;
       border-collapse: collapse;
       font-size: 0.875rem;
     }
@@ -559,9 +601,10 @@
     tbody tr:nth-child(even):hover { background: #f1f5f9; }
 
     tbody td {
-      padding: 0.7rem 1rem;
+      padding: 0.75rem 1rem;
       color: var(--ink-soft);
-      vertical-align: top;
+      vertical-align: middle;
+      white-space: nowrap;
     }
 
     tbody td.num {
@@ -580,6 +623,7 @@
       background: var(--blue-bg);
       color: var(--navy);
       border-top: 2px solid var(--line-strong);
+      white-space: nowrap;
     }
 
     tfoot td.num {
