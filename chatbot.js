@@ -118,7 +118,7 @@ DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
       .nexus-chat-msg {
         padding: 10px 14px; border-radius: 14px;
         max-width: 88%; white-space: pre-wrap; word-wrap: break-word;
-        font-size: 13.5px;
+        font-size: 15px; line-height: 1.55;
       }
       .nexus-chat-msg.user {
         background: #0c2340; color: #fff;
@@ -136,7 +136,7 @@ DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
         border-top: 1px solid #e2e8f0;
       }
       .nexus-suggestion {
-        font-size: 11px; padding: 5px 10px;
+        font-size: 12px; padding: 6px 12px;
         background: #eff6ff; color: #163a5f;
         border: 1px solid #bfdbfe; border-radius: 999px;
         cursor: pointer; font-family: inherit;
@@ -172,13 +172,43 @@ DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
         0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
         30% { transform: translateY(-4px); opacity: 1; }
       }
-      @media (max-width: 480px) {
-        #nexus-chat-panel {
-          right: 0; left: 0; bottom: 0; width: 100%;
-          height: 100%; max-height: 100%;
-          border-radius: 16px 16px 0 0;
+      @media (max-width: 768px) {
+        #nexus-chat-toggle {
+          width: 62px; height: 62px;
+          right: max(12px, env(safe-area-inset-right));
+          bottom: max(12px, env(safe-area-inset-bottom));
         }
-        #nexus-chat-toggle { bottom: max(20px, env(safe-area-inset-bottom)); }
+        #nexus-chat-toggle svg { width: 28px; height: 28px; }
+        #nexus-chat-panel {
+          right: 0; left: 0; bottom: 0;
+          width: 100%; max-width: 100%;
+          height: 100%; max-height: 100%;
+          border-radius: 0;
+          font-size: 17px;
+        }
+        #nexus-chat-header { padding: 16px 18px; }
+        #nexus-chat-header-info strong { font-size: 17px; }
+        #nexus-chat-header-info span { font-size: 13px; }
+        #nexus-chat-close { padding: 10px; }
+        #nexus-chat-messages { padding: 16px; gap: 12px; }
+        .nexus-chat-msg {
+          font-size: 16px; line-height: 1.6;
+          padding: 12px 16px; max-width: 92%;
+        }
+        #nexus-chat-suggestions { padding: 10px 14px; gap: 8px; }
+        .nexus-suggestion {
+          font-size: 13px; padding: 8px 14px;
+          min-height: 36px;
+        }
+        #nexus-chat-form { padding: 12px 14px; gap: 10px; }
+        #nexus-chat-input {
+          font-size: 16px; padding: 12px 14px;
+          min-height: 48px;
+        }
+        #nexus-chat-send {
+          font-size: 15px; padding: 12px 18px;
+          min-height: 48px;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -225,7 +255,8 @@ DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
 Responda SEMPRE em português do Brasil, de forma clara e direta, como um colega ajudando a estudar para a apresentação.
 Use os dados abaixo como fonte da verdade. Se não souber, diga que não está no material.
 Priorize números concretos (R$, %, dias) quando relevante.
-Seja conciso: 2 a 5 frases na maioria das respostas, salvo se pedirem detalhes.
+IMPORTANTE: seja BREVE. Máximo 6-8 linhas por resposta, salvo se pedirem "detalhe" ou "completo".
+Use parágrafos curtos. Evite listas enormes.
 Ajude com: diagnóstico, plano de ação, impacto financeiro, apresentação e perguntas da banca.
 Não invente dados fora do material.
 
