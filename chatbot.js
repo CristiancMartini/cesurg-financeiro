@@ -222,11 +222,11 @@ Apresentação 10-15 min, 8 slides. Abertura: "Faturou 19 mi, lucrou 186 mil."
         }
         #nexus-chat-panel.open { transform: translateY(0); }
         #nexus-chat-toggle { width: 56px; height: 56px; }
-        .nexus-chat-bubble { font-size: 17px; line-height: 1.6; }
-        #nexus-chat-header-text strong { font-size: 18px; }
-        #nexus-chat-header-text span { font-size: 14px; }
-        .nexus-suggestion { font-size: 14px; padding: 10px 16px; }
-        #nexus-chat-input { font-size: 17px; }
+        .nexus-chat-bubble { font-size: 15px; line-height: 1.55; }
+        #nexus-chat-header-text strong { font-size: 16px; }
+        #nexus-chat-header-text span { font-size: 12px; }
+        .nexus-suggestion { font-size: 13px; padding: 8px 14px; }
+        #nexus-chat-input { font-size: 16px; }
       }
     `;
     document.head.appendChild(css);
