@@ -1,242 +1,264 @@
 /**
- * Assistente IA do Plano Financeiro Nexus — powered by Puter.js
- * https://developer.puter.com/tutorials/add-ai-chatbot-to-your-website/
+ * Assistente IA — Plano Financeiro Nexus (Puter.js)
  */
 (function () {
   const KNOWLEDGE = `
-PLANO FINANCEIRO NEXUS SOLUÇÕES INDUSTRIAIS — ÁREA FINANCEIRO — AIHub CESURG
-Período base: 1º semestre 2025. Horizonte do plano: 12 meses.
-
-RESUMO: Nexus faturou R$ 19,3 milhões no semestre mas lucrou apenas R$ 186 mil (margem líquida 1,0%).
-Tese: crescimento financeiro, não só comercial. Meta: margem 1% → 3% em 12 meses.
-Ganho estimado: +R$ 362 mil/semestre (~R$ 730 mil/ano).
-
-INDICADORES: Receita bruta R$ 19.309.749 | Devoluções R$ 1.047.395 (5,4%) | Receita líquida R$ 18.262.354
-CMV R$ 12.588.373 | Lucro bruto R$ 5.673.980 (31,1%) | Despesas operacionais R$ 5.487.954 (30,1%)
-Resultado líquido R$ 186.026 | Frete R$ 849.903 (4,7%) | Inadimplência R$ 2.182.214
-DSO 56 dias (subiu de 52 para 61) | DPO 34 dias | Ciclo financeiro 22 dias.
-
-EVOLUÇÃO MENSAL: Jan 2,5% | Fev 6,3% | Mar -0,7% | Abr -0,1% | Mai -3,8% | Jun 1,2%
-Frete jan R$ 118.519 → jun R$ 171.648.
-
-PROBLEMAS: Margem crítica | Frete em alta | LogNorte ~R$ 382 mil frete, 6,7% devolução, 12 atrasos
-Top 3 clientes (Metalúrgica Serrana, MoveBem, AgroForte) = 41,6% faturamento
-Elétricos ~R$ 2,68 mi receita, margem ~19,1%, caiu de 26% para 16%
-Capital de giro pressionado.
-
-5 FRENTES DO PLANO:
-A) Frete/logística — meta frete 4,7% → 4,0%, economia R$ 119.409/semestre
-B) Crédito por risco — inadimplência → R$ 1,50 mi, DSO → 45 dias
-C) Margem mínima por categoria — Abrasivos 35%, EPI 33%, MRO 30%, Hidráulica 28%, Ferramentas 27%, Elétricos 22%
-D) Devoluções — 5,4% → 3,5%
-E) Caixa — desconto 1,5% pagamento 7 dias, liberar ~R$ 1,1 mi capital de giro
-
-CLASSIFICAÇÃO RISCO CLIENTES:
-Baixo: inad ≤2%, NPS≥7, ≥2 pedidos, compra 90 dias → prazo 45 dias
-Médio: inad 2-8%, NPS 5-6 → sem aumento prazo, desconto >3% aprovação
-Alto: inad >8%, NPS<5 → entrada 30% ou prazo máx 15 dias, bloquear crédito
-Atraso >30 dias perde prazo estendido. Prazo >45 dias precisa aprovação diretor financeiro.
-
-IMPACTO FINANCEIRO (semestre): Frete +R$ 119.409 | Inadimplência +R$ 200.000 | Devoluções +R$ 147.000
-Margem Elétricos +R$ 54.000 | Total margem líquida +R$ 362.000
-Prioridade: 1º Frete, 2º Crédito, 3º Elétricos, 4º Devoluções
-
-CUSTOS IMPLANTAÇÃO: ~108 horas, ~R$ 2.000, payback 1º mês
-Transportadoras: RodoSerra (Serra Gaúcha barata), TransRapido (SC urgente), Encomenda (e-commerce), LogNorte renegociada (Norte RS)
-
-APRESENTAÇÃO: 10-15 min, 8 slides. Frase abertura: "Faturou R$ 19 mi, lucrou R$ 186 mil."
-Frase fechamento: "Crescimento financeiro, não só comercial."
-
-PERGUNTAS BANCA:
-Margem 1%→3% = +R$ 362 mil/semestre | Frete 4,7%→4,0% = R$ 119.409 economia
-DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
+PLANO FINANCEIRO NEXUS — ÁREA FINANCEIRO — CESURG — 1º sem 2025
+Faturamento R$ 19,3 mi | Lucro R$ 186 mil | Margem 1,0% | Meta 3% em 12 meses | Ganho +R$ 362 mil/semestre
+Receita líquida R$ 18.262.354 | Frete R$ 849.903 (4,7%) | Inadimplência R$ 2,18 mi | DSO 56 dias
+Top 3 clientes 41,6% | Elétricos margem ~19% caindo | LogNorte cara, 6,7% devolução
+5 frentes: frete, crédito por risco, margem mínima, devoluções, recebimento
+Margens mín: Abrasivos 35%, EPI 33%, MRO 30%, Hidráulica 28%, Ferramentas 27%, Elétricos 22%
+Impacto: frete +119k, inadimplência +200k, devoluções +147k, elétricos +54k
+Apresentação 10-15 min, 8 slides. Abertura: "Faturou 19 mi, lucrou 186 mil."
 `.trim();
 
   const SUGGESTIONS = [
-    "Qual é a margem líquida atual?",
-    "Quanto ganhamos se frete cair para 4%?",
-    "Como funciona a política de crédito?",
+    "Margem líquida atual?",
+    "Ganho se frete cair para 4%?",
+    "Política de crédito?",
     "O que falar na apresentação?",
   ];
 
   function init() {
-    if (typeof puter === "undefined") {
-      console.warn("Puter.js não carregou — assistente IA indisponível.");
-      return;
-    }
+    if (typeof puter === "undefined") return;
 
-    const style = document.createElement("style");
-    style.textContent = `
+    const css = document.createElement("style");
+    css.textContent = `
+      body.nexus-chat-open { overflow: hidden; }
+
+      #nexus-chat-backdrop {
+        position: fixed; inset: 0;
+        background: rgba(12, 35, 64, 0.45);
+        z-index: 9990;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      #nexus-chat-backdrop.show { opacity: 1; pointer-events: auto; }
+
       #nexus-chat-toggle {
-        position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
-        width: 56px; height: 56px; border-radius: 50%;
-        background: linear-gradient(135deg, #0c2340, #163a5f);
-        color: #fbbf24; border: 2px solid rgba(251,191,36,0.35);
-        cursor: pointer; z-index: 9999;
+        position: fixed;
+        right: max(20px, env(safe-area-inset-right));
+        bottom: max(20px, env(safe-area-inset-bottom));
+        width: 58px; height: 58px; border-radius: 50%;
+        background: linear-gradient(145deg, #0c2340, #1a4a7a);
+        color: #fbbf24; border: none;
+        cursor: pointer; z-index: 9992;
         display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 8px 28px rgba(12,35,64,0.35);
-        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 6px 24px rgba(12,35,64,0.4);
+        transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
       }
-      #nexus-chat-toggle:hover { transform: translateY(-2px) scale(1.03); }
-      #nexus-chat-toggle.open { background: #163a5f; }
-      #nexus-chat-toggle svg { width: 24px; height: 24px; }
+      #nexus-chat-toggle:hover { transform: scale(1.06); }
+      #nexus-chat-toggle.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+      #nexus-chat-toggle svg { width: 26px; height: 26px; }
+
       #nexus-chat-panel {
-        position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(80px + env(safe-area-inset-bottom));
-        width: min(400px, calc(100vw - 32px)); height: min(560px, calc(100vh - 120px));
-        background: #fff; color: #0f172a;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(15,23,42,0.2);
-        display: none; flex-direction: column; overflow: hidden;
+        position: fixed;
+        z-index: 9991;
+        display: flex; flex-direction: column;
+        background: #f1f5f9;
         font-family: "DM Sans", system-ui, sans-serif;
-        font-size: 14px; line-height: 1.55;
-        z-index: 9998;
-        border: 1px solid #e2e8f0;
+        overflow: hidden;
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transform: translateY(16px) scale(0.97);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+        right: max(20px, env(safe-area-inset-right));
+        bottom: calc(88px + env(safe-area-inset-bottom));
+        width: min(420px, calc(100vw - 40px));
+        height: min(620px, calc(100vh - 120px));
+        border-radius: 20px;
+        box-shadow: 0 24px 64px rgba(12,35,64,0.28);
+        border: 1px solid rgba(255,255,255,0.2);
       }
-      #nexus-chat-panel.open { display: flex; animation: nexusSlideUp 0.25s ease; }
-      @keyframes nexusSlideUp {
-        from { opacity: 0; transform: translateY(12px); }
-        to { opacity: 1; transform: translateY(0); }
+      #nexus-chat-panel.open {
+        opacity: 1; visibility: visible; pointer-events: auto;
+        transform: translateY(0) scale(1);
       }
+
       #nexus-chat-header {
-        padding: 14px 16px;
-        background: linear-gradient(135deg, #0c2340, #163a5f);
+        flex-shrink: 0;
+        padding: 16px 18px;
+        padding-top: max(16px, env(safe-area-inset-top));
+        background: linear-gradient(135deg, #0c2340 0%, #163a5f 100%);
         color: #fff;
-        display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        display: flex; align-items: center; gap: 12px;
+        border-bottom: 3px solid #d97706;
       }
-      #nexus-chat-header-info strong { display: block; font-size: 14px; }
-      #nexus-chat-header-info span { font-size: 11px; opacity: 0.75; }
+      .nexus-chat-avatar {
+        width: 40px; height: 40px; border-radius: 12px;
+        background: rgba(251,191,36,0.15);
+        border: 1px solid rgba(251,191,36,0.35);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px; flex-shrink: 0;
+      }
+      #nexus-chat-header-text { flex: 1; min-width: 0; }
+      #nexus-chat-header-text strong {
+        display: block; font-size: 16px; font-weight: 700;
+      }
+      #nexus-chat-header-text span {
+        display: block; font-size: 12px; opacity: 0.8; margin-top: 2px;
+      }
       #nexus-chat-close {
-        background: rgba(255,255,255,0.1); border: none; cursor: pointer;
-        color: #fff; padding: 6px; border-radius: 8px; line-height: 0;
+        width: 40px; height: 40px; border-radius: 10px;
+        background: rgba(255,255,255,0.12); border: none;
+        color: #fff; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
       }
-      #nexus-chat-close:hover { background: rgba(255,255,255,0.2); }
+      #nexus-chat-close:active { background: rgba(255,255,255,0.22); }
+
       #nexus-chat-messages {
-        flex: 1; padding: 14px; overflow-y: auto;
-        display: flex; flex-direction: column; gap: 10px;
-        background: #f8fafc;
+        flex: 1; min-height: 0;
+        overflow-y: auto; -webkit-overflow-scrolling: touch;
+        padding: 16px;
+        display: flex; flex-direction: column; gap: 12px;
       }
-      .nexus-chat-msg {
-        padding: 10px 14px; border-radius: 14px;
-        max-width: 88%; white-space: pre-wrap; word-wrap: break-word;
+
+      .nexus-chat-row {
+        display: flex; gap: 8px; align-items: flex-end;
+        max-width: 100%;
+      }
+      .nexus-chat-row.user { flex-direction: row-reverse; }
+
+      .nexus-chat-bubble {
+        padding: 12px 16px;
+        border-radius: 18px;
         font-size: 15px; line-height: 1.55;
+        white-space: pre-wrap; word-break: break-word;
+        max-width: calc(100% - 36px);
       }
-      .nexus-chat-msg.user {
-        background: #0c2340; color: #fff;
-        align-self: flex-end; border-bottom-right-radius: 4px;
-      }
-      .nexus-chat-msg.bot {
-        background: #fff; color: #334155;
-        align-self: flex-start;
+      .nexus-chat-row.bot .nexus-chat-bubble {
+        background: #fff; color: #1e293b;
         border: 1px solid #e2e8f0;
-        border-bottom-left-radius: 4px;
+        border-bottom-left-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      }
+      .nexus-chat-row.user .nexus-chat-bubble {
+        background: #0c2340; color: #fff;
+        border-bottom-right-radius: 6px;
+      }
+      .nexus-chat-row .mini-avatar {
+        width: 28px; height: 28px; border-radius: 8px;
+        background: #e2e8f0; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px;
+      }
+      .nexus-chat-row.user .mini-avatar { background: #d97706; }
+
+      #nexus-chat-footer {
+        flex-shrink: 0;
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+      }
+      #nexus-chat-suggestions-label {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.06em; color: #64748b;
+        padding: 10px 16px 6px;
       }
       #nexus-chat-suggestions {
-        display: flex; flex-wrap: wrap; gap: 6px;
-        padding: 8px 14px; background: #fff;
-        border-top: 1px solid #e2e8f0;
+        display: flex; gap: 8px;
+        padding: 0 16px 10px;
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
       }
+      #nexus-chat-suggestions::-webkit-scrollbar { display: none; }
       .nexus-suggestion {
-        font-size: 12px; padding: 6px 12px;
-        background: #eff6ff; color: #163a5f;
-        border: 1px solid #bfdbfe; border-radius: 999px;
-        cursor: pointer; font-family: inherit;
-        transition: background 0.15s;
+        flex-shrink: 0;
+        font-size: 13px; padding: 8px 14px;
+        background: #f8fafc; color: #0c2340;
+        border: 1px solid #cbd5e1; border-radius: 20px;
+        cursor: pointer; font-family: inherit; font-weight: 500;
+        white-space: nowrap;
       }
-      .nexus-suggestion:hover { background: #dbeafe; }
+      .nexus-suggestion:active { background: #e2e8f0; }
+
       #nexus-chat-form {
-        display: flex; gap: 8px; align-items: center;
-        border-top: 1px solid #e2e8f0; background: #fff; padding: 10px 12px;
+        display: flex; gap: 10px; align-items: center;
+        padding: 0 16px 4px;
       }
       #nexus-chat-input {
-        flex: 1; border: 1px solid #e2e8f0; outline: none;
-        padding: 10px 12px; font-size: 14px; border-radius: 10px;
-        font-family: inherit; color: #0f172a; background: #f8fafc;
+        flex: 1; min-width: 0;
+        border: 2px solid #e2e8f0; outline: none;
+        padding: 12px 16px; font-size: 16px;
+        border-radius: 14px; font-family: inherit;
+        color: #0f172a; background: #f8fafc;
       }
       #nexus-chat-input:focus { border-color: #d97706; background: #fff; }
       #nexus-chat-send {
-        border: none; background: #d97706; color: #fff;
-        padding: 10px 14px; cursor: pointer; border-radius: 10px;
-        font-size: 13px; font-weight: 600; font-family: inherit;
-        white-space: nowrap;
+        width: 48px; height: 48px; border: none; flex-shrink: 0;
+        background: #d97706; color: #fff;
+        border-radius: 14px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
       }
-      #nexus-chat-send:hover { background: #b45309; }
-      #nexus-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+      #nexus-chat-send:disabled { opacity: 0.45; cursor: not-allowed; }
+      #nexus-chat-send svg { width: 20px; height: 20px; }
+
+      .nexus-chat-typing {
+        display: inline-flex; gap: 5px; padding: 4px 0;
+      }
       .nexus-chat-typing span {
-        width: 6px; height: 6px; border-radius: 50%; background: #94a3b8;
-        display: inline-block; margin: 0 2px;
-        animation: nexusBounce 1.2s ease-in-out infinite;
+        width: 7px; height: 7px; border-radius: 50%;
+        background: #94a3b8;
+        animation: nexusDot 1.2s ease-in-out infinite;
       }
       .nexus-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
       .nexus-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
-      @keyframes nexusBounce {
-        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-        30% { transform: translateY(-4px); opacity: 1; }
+      @keyframes nexusDot {
+        0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+        30% { transform: translateY(-5px); opacity: 1; }
       }
+
       @media (max-width: 768px) {
-        #nexus-chat-toggle {
-          width: 62px; height: 62px;
-          right: max(12px, env(safe-area-inset-right));
-          bottom: max(12px, env(safe-area-inset-bottom));
-        }
-        #nexus-chat-toggle svg { width: 28px; height: 28px; }
         #nexus-chat-panel {
-          right: 0; left: 0; bottom: 0;
-          width: 100%; max-width: 100%;
-          height: 100%; max-height: 100%;
+          inset: 0; right: 0; bottom: 0;
+          width: 100%; height: 100%;
+          max-width: 100%; max-height: 100%;
           border-radius: 0;
-          font-size: 17px;
+          transform: translateY(100%);
         }
-        #nexus-chat-header { padding: 16px 18px; }
-        #nexus-chat-header-info strong { font-size: 17px; }
-        #nexus-chat-header-info span { font-size: 13px; }
-        #nexus-chat-close { padding: 10px; }
-        #nexus-chat-messages { padding: 16px; gap: 12px; }
-        .nexus-chat-msg {
-          font-size: 16px; line-height: 1.6;
-          padding: 12px 16px; max-width: 92%;
-        }
-        #nexus-chat-suggestions { padding: 10px 14px; gap: 8px; }
-        .nexus-suggestion {
-          font-size: 13px; padding: 8px 14px;
-          min-height: 36px;
-        }
-        #nexus-chat-form { padding: 12px 14px; gap: 10px; }
-        #nexus-chat-input {
-          font-size: 16px; padding: 12px 14px;
-          min-height: 48px;
-        }
-        #nexus-chat-send {
-          font-size: 15px; padding: 12px 18px;
-          min-height: 48px;
-        }
+        #nexus-chat-panel.open { transform: translateY(0); }
+        #nexus-chat-toggle { width: 56px; height: 56px; }
+        .nexus-chat-bubble { font-size: 16px; }
+        #nexus-chat-suggestions { flex-wrap: nowrap; }
       }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(css);
+
+    const backdrop = document.createElement("div");
+    backdrop.id = "nexus-chat-backdrop";
+    document.body.appendChild(backdrop);
 
     const toggle = document.createElement("button");
     toggle.id = "nexus-chat-toggle";
-    toggle.setAttribute("aria-label", "Abrir assistente IA");
-    toggle.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="12" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>`;
+    toggle.setAttribute("aria-label", "Abrir chat");
+    toggle.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`;
     document.body.appendChild(toggle);
 
     const panel = document.createElement("div");
     panel.id = "nexus-chat-panel";
     panel.innerHTML = `
-      <div id="nexus-chat-header">
-        <div id="nexus-chat-header-info">
+      <header id="nexus-chat-header">
+        <div class="nexus-chat-avatar" aria-hidden="true">💼</div>
+        <div id="nexus-chat-header-text">
           <strong>Assistente Nexus</strong>
-          <span>IA gratuita · pergunte sobre o plano</span>
+          <span>Tire dúvidas sobre o plano financeiro</span>
         </div>
         <button id="nexus-chat-close" type="button" aria-label="Fechar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
-      </div>
+      </header>
       <div id="nexus-chat-messages"></div>
-      <div id="nexus-chat-suggestions"></div>
-      <form id="nexus-chat-form">
-        <input id="nexus-chat-input" type="text" placeholder="Pergunte sobre o plano financeiro..." autocomplete="off" />
-        <button id="nexus-chat-send" type="submit">Enviar</button>
-      </form>
+      <div id="nexus-chat-footer">
+        <div id="nexus-chat-suggestions-label">Perguntas rápidas</div>
+        <div id="nexus-chat-suggestions"></div>
+        <form id="nexus-chat-form">
+          <input id="nexus-chat-input" type="text" placeholder="Digite sua pergunta..." autocomplete="off" enterkeyhint="send" />
+          <button id="nexus-chat-send" type="submit" aria-label="Enviar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+      </div>
     `;
     document.body.appendChild(panel);
 
@@ -245,38 +267,31 @@ DSO 56→45 libera ~R$ 1,1 mi | Implantação ~R$ 2 mil + 108h
     const form = panel.querySelector("#nexus-chat-form");
     const input = panel.querySelector("#nexus-chat-input");
     const sendBtn = panel.querySelector("#nexus-chat-send");
-    const closeBtn = panel.querySelector("#nexus-chat-close");
-
-    const pageSnippet = document.body.innerText.replace(/\s+/g, " ").slice(0, 4000);
 
     const conversation = [{
       role: "system",
-      content: `Você é o assistente de estudo do Plano Financeiro da Nexus Soluções Industriais (trabalho CESURG).
-Responda SEMPRE em português do Brasil, de forma clara e direta, como um colega ajudando a estudar para a apresentação.
-Use os dados abaixo como fonte da verdade. Se não souber, diga que não está no material.
-Priorize números concretos (R$, %, dias) quando relevante.
-IMPORTANTE: seja BREVE. Máximo 6-8 linhas por resposta, salvo se pedirem "detalhe" ou "completo".
-Use parágrafos curtos. Evite listas enormes.
-Ajude com: diagnóstico, plano de ação, impacto financeiro, apresentação e perguntas da banca.
-Não invente dados fora do material.
+      content: `Assistente do Plano Financeiro Nexus (CESURG). Responda em português, curto (máx 6 linhas), com números quando couber. Não invente dados.
 
-BASE DE CONHECIMENTO:
-${KNOWLEDGE}
-
-TEXTO ADICIONAL DA PÁGINA:
-${pageSnippet}`,
+${KNOWLEDGE}`,
     }];
 
     function addMessage(role, text) {
-      const el = document.createElement("div");
-      el.className = "nexus-chat-msg " + role;
-      el.textContent = text;
-      messagesEl.appendChild(el);
+      const row = document.createElement("div");
+      row.className = "nexus-chat-row " + role;
+      const av = document.createElement("div");
+      av.className = "mini-avatar";
+      av.textContent = role === "bot" ? "🤖" : "👤";
+      const bubble = document.createElement("div");
+      bubble.className = "nexus-chat-bubble";
+      bubble.textContent = text;
+      row.appendChild(av);
+      row.appendChild(bubble);
+      messagesEl.appendChild(row);
       messagesEl.scrollTop = messagesEl.scrollHeight;
-      return el;
+      return bubble;
     }
 
-    addMessage("bot", "Olá! Sou o assistente do plano financeiro da Nexus. Pergunte sobre margem, frete, crédito, apresentação ou o que a banca pode perguntar.\n\nNa primeira mensagem pode aparecer um login do Puter (gratuito) — é só para liberar a IA.");
+    addMessage("bot", "Oi! Pergunte sobre margem, frete, crédito ou apresentação.\n\nNa 1ª mensagem pode abrir um login rápido do Puter (grátis) — é normal.");
 
     SUGGESTIONS.forEach((text) => {
       const btn = document.createElement("button");
@@ -292,12 +307,15 @@ ${pageSnippet}`,
 
     function setOpen(open) {
       panel.classList.toggle("open", open);
-      toggle.classList.toggle("open", open);
-      if (open) input.focus();
+      backdrop.classList.toggle("show", open);
+      toggle.classList.toggle("hidden", open);
+      document.body.classList.toggle("nexus-chat-open", open);
+      if (open) setTimeout(() => input.focus(), 300);
     }
 
-    toggle.addEventListener("click", () => setOpen(!panel.classList.contains("open")));
-    closeBtn.addEventListener("click", () => setOpen(false));
+    toggle.addEventListener("click", () => setOpen(true));
+    panel.querySelector("#nexus-chat-close").addEventListener("click", () => setOpen(false));
+    backdrop.addEventListener("click", () => setOpen(false));
 
     let busy = false;
 
@@ -332,18 +350,17 @@ ${pageSnippet}`,
         }
 
         if (!answer) {
-          botEl.textContent = "Não consegui gerar uma resposta. Tente reformular a pergunta.";
+          botEl.textContent = "Não consegui responder. Tente de novo.";
           conversation.pop();
         } else {
           conversation.push({ role: "assistant", content: answer });
         }
       } catch (err) {
-        botEl.textContent = "Erro: " + (err.message || "tente novamente. Se for a primeira vez, aceite o login do Puter no popup.");
+        botEl.textContent = "Não foi possível responder. Se apareceu um popup, faça login no Puter e tente novamente.";
         conversation.pop();
       } finally {
         busy = false;
         sendBtn.disabled = false;
-        input.focus();
       }
     });
   }
