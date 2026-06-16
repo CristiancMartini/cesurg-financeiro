@@ -176,9 +176,129 @@
     }
 
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem 5rem;
+        gap: 1rem;
+      }
       .nav-side { display: none; }
+      .mobile-nav { display: flex; }
+      .hero { padding: 2.5rem 1rem 3.5rem; }
+      .hero h1 { font-size: 1.65rem; }
+      .hero-sub { font-size: 0.95rem; }
+      .kpi-row {
+        margin-top: -1.75rem;
+        padding: 0 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+      .kpi { padding: 1rem; }
+      .kpi-value { font-size: 1.35rem; }
+      .content section { padding: 1.25rem 1rem; }
+      .content h2 { font-size: 1.2rem; }
+      .slide-card { grid-template-columns: 1fr; gap: 0.65rem; }
+      .slide-num { width: 2.5rem; height: 2.5rem; font-size: 0.95rem; }
+      table { font-size: 0.8rem; }
+      thead th, tbody td { padding: 0.55rem 0.65rem; }
+      footer { padding-bottom: 5rem; font-size: 0.75rem; }
     }
+
+    @media (max-width: 400px) {
+      .kpi-row { grid-template-columns: 1fr; }
+      .hero-meta { flex-direction: column; gap: 0.25rem; }
+      .hero-meta span::before { content: none; margin: 0; }
+    }
+
+    /* ── Mobile nav ── */
+    .mobile-nav {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .mobile-nav-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      cursor: pointer;
+      color: var(--navy);
+    }
+
+    .menu-btn svg { width: 20px; height: 20px; }
+
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      z-index: 200;
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-overlay.open { display: block; }
+
+    .nav-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: min(280px, 85vw);
+      height: 100%;
+      background: var(--paper);
+      z-index: 201;
+      padding: 1.25rem 0;
+      box-shadow: -8px 0 32px rgba(15, 23, 42, 0.15);
+      transition: right 0.28s ease;
+      overflow-y: auto;
+    }
+
+    .nav-drawer.open { right: 0; }
+
+    .nav-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem 1rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 0.9rem;
+    }
+
+    .nav-drawer a {
+      display: block;
+      padding: 0.65rem 1.25rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-drawer a:hover {
+      background: var(--bg);
+      color: var(--navy);
+      border-left-color: var(--accent);
+    }
+
+    body.menu-open { overflow: hidden; }
 
     /* ── Nav ── */
     .nav-side {
@@ -543,6 +663,34 @@
       </div>
     </div>
   </header>
+
+  <nav class="mobile-nav" aria-label="Menu mobile">
+    <span class="mobile-nav-title">Plano Financeiro Nexus</span>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Abrir menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <aside class="nav-drawer" id="nav-drawer" aria-label="Navegação">
+    <div class="nav-drawer-header">
+      <span>Ir para</span>
+      <button class="menu-btn" id="menu-close" type="button" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <a href="#resumo">Resumo</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#mercado">Mercado</a>
+    <a href="#plano">Plano de ação</a>
+    <a href="#impacto">Impacto financeiro</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#custos">Custos</a>
+    <a href="#responsaveis">Responsáveis</a>
+    <a href="#kpis">KPIs</a>
+    <a href="#apresentacao">Como apresentar</a>
+    <a href="#banca">Perguntas da banca</a>
+  </aside>
 
   <div class="kpi-row">
     <div class="kpi">
@@ -1151,7 +1299,30 @@
 
   <footer>
     Nexus Soluções Industriais · Plano Financeiro · AIHub CESURG · Material de estudo
+    <br><small style="opacity:0.7">Assistente IA gratuito no canto inferior direito</small>
   </footer>
 
+  <script>
+    (function () {
+      const btn = document.getElementById("menu-btn");
+      const close = document.getElementById("menu-close");
+      const drawer = document.getElementById("nav-drawer");
+      const overlay = document.getElementById("nav-overlay");
+      const links = drawer.querySelectorAll("a");
+
+      function setMenu(open) {
+        drawer.classList.toggle("open", open);
+        overlay.classList.toggle("open", open);
+        document.body.classList.toggle("menu-open", open);
+      }
+
+      btn.addEventListener("click", () => setMenu(true));
+      close.addEventListener("click", () => setMenu(false));
+      overlay.addEventListener("click", () => setMenu(false));
+      links.forEach((a) => a.addEventListener("click", () => setMenu(false)));
+    })();
+  </script>
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>
