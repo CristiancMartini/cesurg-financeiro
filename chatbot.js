@@ -64,8 +64,9 @@ Apresentação 10-15 min, 8 slides. Abertura: "Faturou 19 mi, lucrou 186 mil."
         transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
         right: max(20px, env(safe-area-inset-right));
         bottom: calc(88px + env(safe-area-inset-bottom));
-        width: min(420px, calc(100vw - 40px));
-        height: min(620px, calc(100vh - 120px));
+        width: min(420px, calc(100dvw - 40px));
+        height: min(620px, calc(100dvh - 120px));
+        max-width: calc(100dvw - 40px);
         border-radius: 20px;
         box-shadow: 0 24px 64px rgba(12,35,64,0.28);
         border: 1px solid rgba(255,255,255,0.2);
@@ -211,16 +212,21 @@ Apresentação 10-15 min, 8 slides. Abertura: "Faturou 19 mi, lucrou 186 mil."
 
       @media (max-width: 768px) {
         #nexus-chat-panel {
-          inset: 0; right: 0; bottom: 0;
-          width: 100%; height: 100%;
-          max-width: 100%; max-height: 100%;
+          inset: 0;
+          width: 100dvw;
+          height: 100dvh;
+          max-width: 100dvw;
+          max-height: 100dvh;
           border-radius: 0;
           transform: translateY(100%);
         }
         #nexus-chat-panel.open { transform: translateY(0); }
         #nexus-chat-toggle { width: 56px; height: 56px; }
-        .nexus-chat-bubble { font-size: 16px; }
-        #nexus-chat-suggestions { flex-wrap: nowrap; }
+        .nexus-chat-bubble { font-size: 17px; line-height: 1.6; }
+        #nexus-chat-header-text strong { font-size: 18px; }
+        #nexus-chat-header-text span { font-size: 14px; }
+        .nexus-suggestion { font-size: 14px; padding: 10px 16px; }
+        #nexus-chat-input { font-size: 17px; }
       }
     `;
     document.head.appendChild(css);

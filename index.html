@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Plano Financeiro de Crescimento — Nexus Soluções Industriais. Material de estudo para apresentação AIHub CESURG.">
   <title>Plano Financeiro Nexus — Material de Estudo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,11 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+      max-width: 100dvw;
+    }
 
     body {
       margin: 0;
@@ -44,7 +48,22 @@
       line-height: 1.6;
       color: var(--ink);
       background: var(--bg);
+      overflow-x: clip;
+      max-width: 100dvw;
+      width: 100%;
     }
+
+    .hero,
+    .kpi-row,
+    .layout,
+    .content,
+    footer,
+    .mobile-nav {
+      max-width: 100dvw;
+      width: 100%;
+    }
+
+    .content { min-width: 0; }
 
     /* ── Header ── */
     .hero {
@@ -176,52 +195,128 @@
     }
 
     @media (max-width: 900px) {
-      html { -webkit-text-size-adjust: 100%; }
-      body { font-size: 17px; }
+      html {
+        -webkit-text-size-adjust: 100%;
+        font-size: 18px;
+      }
+
+      body { font-size: 1rem; }
+
       .layout {
         grid-template-columns: 1fr;
-        padding: 1rem 0.75rem 5.5rem;
+        padding: 1rem 0.85rem 5.5rem;
         gap: 1rem;
+        margin: 0;
       }
+
       .nav-side { display: none; }
-      .mobile-nav { display: flex; }
-      .hero { padding: 2rem 1rem 3rem; }
-      .hero h1 { font-size: 1.85rem; }
-      .hero-sub { font-size: 1rem; line-height: 1.55; }
+      .mobile-nav {
+        display: flex;
+        padding: 0.85rem 1rem;
+      }
+
+      .mobile-nav-title { font-size: 1.05rem; }
+
+      .hero {
+        padding: 2rem 1rem 3rem;
+        overflow-x: clip;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      .hero-sub { font-size: 1.1rem; line-height: 1.55; }
+      .hero-meta { font-size: 0.95rem; }
+      .badge { font-size: 0.8rem; }
+
       .kpi-row {
         margin-top: -1.5rem;
-        padding: 0 0.75rem;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.65rem;
+        padding: 0 0.85rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
       }
-      .kpi { padding: 1.1rem; }
-      .kpi-label { font-size: 0.7rem; }
-      .kpi-value { font-size: 1.5rem; }
-      .kpi-note { font-size: 0.85rem; }
-      .content section { padding: 1.35rem 1rem; margin-bottom: 1rem; }
-      .content h2 { font-size: 1.3rem; }
-      .content h3 { font-size: 1.1rem; }
-      .content p, .content li { font-size: 1rem; }
-      .lead { font-size: 1.05rem; }
-      .slide-card { grid-template-columns: 1fr; gap: 0.75rem; padding: 1.1rem; }
-      .slide-num { width: 2.75rem; height: 2.75rem; font-size: 1rem; }
-      .slide-card h4 { font-size: 1rem; }
-      .slide-card p, .slide-card ul { font-size: 0.95rem; }
-      table { font-size: 0.9rem; min-width: 100%; }
-      thead th, tbody td { padding: 0.65rem 0.75rem; }
-      .frente { padding: 1.1rem; }
-      .frente h4 { font-size: 1rem; }
-      .frente p, .frente ul { font-size: 0.95rem; }
-      .faq summary { font-size: 1rem; padding: 1rem; }
-      .faq .answer { font-size: 0.95rem; }
-      footer { padding: 1.5rem 1rem 5.5rem; font-size: 0.85rem; }
+
+      .kpi {
+        padding: 1.15rem;
+        min-width: 0;
+      }
+
+      .kpi-label { font-size: 0.8rem; }
+      .kpi-value { font-size: 1.65rem; }
+      .kpi-note { font-size: 0.95rem; }
+
+      .content section {
+        padding: 1.35rem 1rem;
+        margin-bottom: 1rem;
+        min-width: 0;
+        overflow-x: clip;
+      }
+
+      .content h2 { font-size: 1.45rem; }
+      .content h3 { font-size: 1.2rem; }
+      .content p,
+      .content li,
+      .highlight-box { font-size: 1.05rem; }
+      .lead { font-size: 1.1rem; }
+
+      .slide-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        padding: 1.15rem;
+        min-width: 0;
+      }
+
+      .slide-num { width: 3rem; height: 3rem; font-size: 1.1rem; }
+      .slide-card h4 { font-size: 1.1rem; }
+      .slide-card p,
+      .slide-card ul { font-size: 1.05rem; }
+
+      table { font-size: 1rem; }
+
+      thead th {
+        font-size: 0.9rem;
+        white-space: normal;
+        padding: 0.7rem 0.65rem;
+      }
+
+      tbody td {
+        padding: 0.7rem 0.65rem;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      tbody td.num {
+        font-size: 0.95rem;
+        white-space: normal;
+      }
+
+      .tag { font-size: 0.8rem; }
+
+      .frente { padding: 1.15rem; min-width: 0; }
+      .frente h4 { font-size: 1.1rem; }
+      .frente p,
+      .frente ul,
+      .frente .meta { font-size: 1.05rem; }
+
+      .faq summary { font-size: 1.05rem; padding: 1rem; }
+      .faq .answer { font-size: 1.05rem; }
+
+      .checklist li { font-size: 1.05rem; }
+
+      footer {
+        padding: 1.5rem 1rem 5.5rem;
+        font-size: 0.95rem;
+        overflow-wrap: anywhere;
+      }
     }
 
-    @media (max-width: 400px) {
-      body { font-size: 16px; }
+    @media (max-width: 480px) {
       .kpi-row { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 1.6rem; }
-      .hero-meta { flex-direction: column; gap: 0.25rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .hero-meta { flex-direction: column; gap: 0.35rem; }
       .hero-meta span::before { content: none; margin: 0; }
     }
 
@@ -423,6 +518,8 @@
     /* ── Tables ── */
     .table-wrap {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
       margin: 1rem 0;
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
@@ -430,6 +527,7 @@
 
     table {
       width: 100%;
+      max-width: 100%;
       border-collapse: collapse;
       font-size: 0.875rem;
     }
