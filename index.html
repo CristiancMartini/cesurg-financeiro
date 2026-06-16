@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plano Financeiro de Crescimento — Nexus Soluções Industriais. Material de estudo para apresentação AIHub CESURG.">
+  <title>Plano Financeiro Nexus — Material de Estudo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f172a;
+      --ink-soft: #334155;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --line-strong: #cbd5e1;
+      --bg: #f1f5f9;
+      --paper: #ffffff;
+      --navy: #0c2340;
+      --navy-mid: #163a5f;
+      --accent: #d97706;
+      --accent-light: #fbbf24;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --amber-bg: #fffbeb;
+      --blue-bg: #eff6ff;
+      --shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    /* ── Header ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, #1e4d7b 100%);
+      color: #fff;
+      padding: 3.5rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 90% 10%, rgba(251, 191, 36, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      margin: 0;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .hero-meta span::before {
+      content: "•";
+      margin-right: 0.5rem;
+      color: var(--accent-light);
+    }
+
+    .hero-meta span:first-child::before { content: none; margin: 0; }
+
+    /* ── KPI cards ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 1100px;
+      margin: -2.5rem auto 0;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .kpi {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-value.danger { color: var(--red); }
+    .kpi-value.success { color: var(--green); }
+    .kpi-value.accent { color: var(--accent); }
+
+    .kpi-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .nav-side { display: none; }
+    }
+
+    /* ── Nav ── */
+    .nav-side {
+      position: sticky;
+      top: 1.5rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-side-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0 1rem 0.75rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-side a {
+      display: block;
+      padding: 0.45rem 1rem;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .nav-side a:hover {
+      color: var(--navy);
+      background: var(--bg);
+      border-left-color: var(--accent);
+    }
+
+    /* ── Sections ── */
+    .content section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .content h2 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--bg);
+    }
+
+    .content h3 {
+      margin: 1.5rem 0 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .content h3:first-of-type { margin-top: 0; }
+
+    .content p { margin: 0 0 0.85rem; color: var(--ink-soft); }
+
+    .content ul, .content ol {
+      margin: 0 0 1rem;
+      padding-left: 1.35rem;
+      color: var(--ink-soft);
+    }
+
+    .content li { margin: 0.35rem 0; }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--ink);
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .highlight-box {
+      background: var(--amber-bg);
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box strong { color: var(--navy); }
+
+    .quote {
+      font-style: italic;
+      color: var(--navy-mid);
+      border-left: 3px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1rem;
+      margin: 1rem 0;
+    }
+
+    /* ── Tables ── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    thead th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    thead th.num { text-align: right; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      transition: background 0.12s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f8fafc; }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:nth-child(even):hover { background: #f1f5f9; }
+
+    tbody td {
+      padding: 0.7rem 1rem;
+      color: var(--ink-soft);
+      vertical-align: top;
+    }
+
+    tbody td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    tbody td strong { color: var(--ink); }
+
+    tfoot td {
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      background: var(--blue-bg);
+      color: var(--navy);
+      border-top: 2px solid var(--line-strong);
+    }
+
+    tfoot td.num {
+      text-align: right;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .tag-green { background: var(--green-bg); color: var(--green); }
+    .tag-amber { background: var(--amber-bg); color: #b45309; }
+    .tag-red { background: var(--red-bg); color: var(--red); }
+
+    /* ── Frentes cards ── */
+    .frentes {
+      display: grid;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .frente {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem 1.25rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .frente h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.95rem;
+      color: var(--navy);
+    }
+
+    .frente p { margin: 0 0 0.5rem; font-size: 0.875rem; }
+    .frente ul { margin: 0; font-size: 0.875rem; }
+    .frente .meta {
+      margin-top: 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    /* ── Slides guide ── */
+    .slides {
+      display: grid;
+      gap: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .slide-card {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 1.15rem;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+    }
+
+    .slide-num {
+      width: 3.5rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .slide-card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      color: var(--navy);
+    }
+
+    .slide-card p, .slide-card ul {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .slide-card .time {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 0.35rem;
+    }
+
+    /* ── FAQ ── */
+    .faq details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+
+    .faq summary {
+      padding: 0.9rem 1.15rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--navy);
+      cursor: pointer;
+      background: var(--bg);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq summary::before {
+      content: "+";
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 700;
+      width: 1.25rem;
+    }
+
+    .faq details[open] summary::before { content: "−"; }
+
+    .faq .answer {
+      padding: 0 1.15rem 1rem;
+      font-size: 0.875rem;
+      color: var(--ink-soft);
+    }
+
+    .faq .answer ul { margin: 0.5rem 0 0; }
+
+    /* ── Checklist ── */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .checklist li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .checklist li::before {
+      content: "";
+      width: 1.1rem;
+      height: 1.1rem;
+      border: 2px solid var(--line-strong);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    @media print {
+      .nav-side { display: none; }
+      .layout { grid-template-columns: 1fr; padding: 0; }
+      .hero { padding: 1.5rem; }
+      .kpi-row { margin-top: 1rem; }
+      section { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="badge">CESURG · Área Financeiro</span>
+      <h1>Plano Financeiro de Crescimento<br>Nexus Soluções Industriais</h1>
+      <p class="hero-sub">Material de estudo completo para a apresentação. Diagnóstico, plano de ação, impacto em reais e respostas para a banca.</p>
+      <div class="hero-meta">
+        <span>1º semestre 2025</span>
+        <span>Horizonte: 12 meses</span>
+        <span>Meta: margem 1% → 3%</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Faturamento</div>
+      <div class="kpi-value">R$ 19,3 mi</div>
+      <div class="kpi-note">Receita bruta no semestre</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Lucro líquido</div>
+      <div class="kpi-value danger">R$ 186 mil</div>
+      <div class="kpi-note">Apenas 1,0% de margem</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Ganho estimado</div>
+      <div class="kpi-value success">+R$ 362 mil</div>
+      <div class="kpi-note">Por semestre com o plano</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Meta anual</div>
+      <div class="kpi-value accent">~R$ 730 mil</div>
+      <div class="kpi-note">Lucro adicional por ano</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="nav-side" aria-label="Navegação">
+      <div class="nav-side-title">Conteúdo</div>
+      <a href="#resumo">Resumo</a>
+      <a href="#diagnostico">Diagnóstico</a>
+      <a href="#mercado">Mercado</a>
+      <a href="#plano">Plano de ação</a>
+      <a href="#impacto">Impacto financeiro</a>
+      <a href="#cronograma">Cronograma</a>
+      <a href="#custos">Custos</a>
+      <a href="#responsaveis">Responsáveis</a>
+      <a href="#kpis">KPIs</a>
+      <a href="#apresentacao">Como apresentar</a>
+      <a href="#banca">Perguntas da banca</a>
+    </nav>
+
+    <main class="content">
+
+      <!-- RESUMO -->
+      <section id="resumo">
+        <h2>1. Resumo executivo</h2>
+        <p class="lead">A Nexus faturou <strong>R$ 19,3 milhões</strong> no 1º semestre de 2025, mas lucrou apenas <strong>R$ 186 mil</strong> (margem de 1,0%). Vende bem, mas não converte faturamento em lucro e caixa.</p>
+        <p><strong>Tese do plano:</strong> o crescimento precisa ser <em>financeiro</em>, não só comercial. Meta em 12 meses: elevar a margem líquida de <strong>1,0% para 3,0%</strong>.</p>
+        <div class="highlight-box">
+          <strong>Quatro alavancas prioritárias:</strong>
+          <ol style="margin: 0.5rem 0 0;">
+            <li>Reduzir frete e devoluções (LogNorte e logística)</li>
+            <li>Apertar política de crédito por risco de cliente</li>
+            <li>Proteger margem mínima por categoria (especialmente Elétricos)</li>
+            <li>Acelerar recebimento (DSO de 56 → 45 dias)</li>
+          </ol>
+        </div>
+        <p class="quote">"A Nexus já tem escala. Agora precisa de disciplina financeira para transformar faturamento em lucro."</p>
+      </section>
+
+      <!-- DIAGNÓSTICO -->
+      <section id="diagnostico">
+        <h2>2. Diagnóstico financeiro</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Indicador</th>
+                <th class="num">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Receita bruta</td><td class="num">R$ 19.309.749</td></tr>
+              <tr><td>Devoluções</td><td class="num">R$ 1.047.395 <span class="tag tag-amber">5,4%</span></td></tr>
+              <tr><td>Receita líquida</td><td class="num">R$ 18.262.354</td></tr>
+              <tr><td>CMV</td><td class="num">R$ 12.588.373</td></tr>
+              <tr><td>Lucro bruto</td><td class="num">R$ 5.673.980 <span class="tag tag-green">31,1%</span></td></tr>
+              <tr><td>Despesas operacionais</td><td class="num">R$ 5.487.954 <span class="tag tag-amber">30,1%</span></td></tr>
+              <tr><td><strong>Resultado líquido</strong></td><td class="num"><strong>R$ 186.026</strong></td></tr>
+              <tr><td><strong>Margem líquida</strong></td><td class="num"><strong><span class="tag tag-red">1,0%</span></strong></td></tr>
+              <tr><td>Frete e logística</td><td class="num">R$ 849.903 <span class="tag tag-amber">4,7%</span></td></tr>
+              <tr><td>Inadimplência</td><td class="num">R$ 2.182.214 <span class="tag tag-amber">6,4%</span></td></tr>
+              <tr><td>DSO (recebimento)</td><td class="num">56 dias</td></tr>
+              <tr><td>DPO (pagamento)</td><td class="num">34 dias</td></tr>
+              <tr><td>Ciclo financeiro</td><td class="num">22 dias</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Evolução mensal</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Mês</th>
+                <th class="num">Receita líquida</th>
+                <th class="num">Resultado líquido</th>
+                <th class="num">Margem</th>
+                <th class="num">Frete</th>
+                <th class="num">DSO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Janeiro</td><td class="num">R$ 2.975.548</td><td class="num">R$ 74.225</td><td class="num"><span class="tag tag-green">2,5%</span></td><td class="num">R$ 118.519</td><td class="num">52 dias</td></tr>
+              <tr><td>Fevereiro</td><td class="num">R$ 3.229.044</td><td class="num">R$ 201.886</td><td class="num"><span class="tag tag-green">6,3%</span></td><td class="num">R$ 102.933</td><td class="num">54 dias</td></tr>
+              <tr><td>Março</td><td class="num">R$ 2.860.008</td><td class="num" style="color:var(--red)">−R$ 18.964</td><td class="num"><span class="tag tag-red">−0,7%</span></td><td class="num">R$ 141.730</td><td class="num">55 dias</td></tr>
+              <tr><td>Abril</td><td class="num">R$ 2.926.475</td><td class="num" style="color:var(--red)">−R$ 2.268</td><td class="num"><span class="tag tag-red">−0,1%</span></td><td class="num">R$ 157.573</td><td class="num">57 dias</td></tr>
+              <tr><td>Maio</td><td class="num">R$ 2.882.557</td><td class="num" style="color:var(--red)">−R$ 108.671</td><td class="num"><span class="tag tag-red">−3,8%</span></td><td class="num">R$ 157.500</td><td class="num">58 dias</td></tr>
+              <tr><td>Junho</td><td class="num">R$ 3.388.722</td><td class="num">R$ 39.818</td><td class="num"><span class="tag tag-amber">1,2%</span></td><td class="num">R$ 171.648</td><td class="num">61 dias</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>5 problemas confirmados</h3>
+        <ol>
+          <li><strong>Margem líquida crítica</strong> — março, abril e maio no vermelho</li>
+          <li><strong>Frete em alta</strong> — R$ 118,5 mil (jan) → R$ 171,6 mil (jun); LogNorte ~R$ 382 mil, 6,7% devolução</li>
+          <li><strong>Concentração</strong> — top 3 clientes = 41,6% do faturamento</li>
+          <li><strong>Elétricos em queda</strong> — ~R$ 2,68 mi com margem ~19,1% (caiu de 26% para 16%)</li>
+          <li><strong>Capital de giro pressionado</strong> — DSO subindo + R$ 2,18 mi inadimplência</li>
+        </ol>
+      </section>
+
+      <!-- MERCADO -->
+      <section id="mercado">
+        <h2>3. Contexto de mercado</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Fator</th><th>Impacto na Nexus</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Distribuição B2B industrial no Sul</td><td>Mercado maduro, concorrência por preço em elétricos e MRO</td></tr>
+              <tr><td>Crescimento em SC</td><td>Região em expansão; ticket menor e frete mais caro</td></tr>
+              <tr><td>E-commerce B2B</td><td>Canal cresce, mas precisa de margem mínima e frete otimizado</td></tr>
+              <tr><td>Pressão de margem no setor</td><td>Guerra de preços em elétricos — exige política de desconto</td></tr>
+              <tr><td>Concentração em grandes clientes</td><td>Comum no B2B, mas exige gestão ativa de risco de crédito</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PLANO -->
+      <section id="plano">
+        <h2>4. Plano de ação — 5 frentes</h2>
+        <div class="frentes">
+          <div class="frente">
+            <h4>A — Logística e frete <span class="tag tag-green">Quick win</span></h4>
+            <p>Frete consome 4,7% da receita; LogNorte cara com mais devoluções.</p>
+            <ul>
+              <li>Renegociar LogNorte (−12%) ou migrar 40% do volume SC</li>
+              <li>LogNorte só para pedidos &gt; R$ 15 mil no Norte RS</li>
+              <li>Revisar frete embutido no e-commerce</li>
+            </ul>
+            <div class="meta">Meta: frete de 4,7% → 4,0% em 6 meses</div>
+          </div>
+          <div class="frente">
+            <h4>B — Política de crédito por risco</h4>
+            <p>Inadimplência R$ 2,18 mi; DSO subindo de 52 para 61 dias.</p>
+            <div class="meta">Meta: inadimplência → R$ 1,50 mi · DSO → 45 dias</div>
+          </div>
+          <div class="frente">
+            <h4>C — Margem mínima por categoria</h4>
+            <p>Descontos sem controle corroem margem, especialmente Elétricos.</p>
+            <div class="meta">Meta: +2 p.p. margem bruta em Elétricos em 6 meses</div>
+          </div>
+          <div class="frente">
+            <h4>D — Devoluções</h4>
+            <p>R$ 1,05 mi em devoluções (5,4% da receita bruta).</p>
+            <div class="meta">Meta: 5,4% → 3,5% · LogNorte de 6,7% → 3,5% devolução</div>
+          </div>
+          <div class="frente">
+            <h4>E — Caixa e recebimento</h4>
+            <p>Desconto 1,5% para pagamento em 7 dias; aging semanal.</p>
+            <div class="meta">Meta: liberar ~R$ 1,1 mi de capital de giro</div>
+          </div>
+        </div>
+
+        <h3>Classificação de risco de clientes</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nível</th>
+                <th>Critério</th>
+                <th>Política comercial</th>
+                <th>Ação do financeiro</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag tag-green">Baixo</span></td>
+                <td>Ativo, inad. ≤ 2%, NPS ≥ 7, ≥ 2 pedidos, compra em 90 dias</td>
+                <td>Prazo padrão (45 dias), liberar recompra</td>
+                <td>Acompanhamento mensal</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-amber">Médio</span></td>
+                <td>Ativo, inad. 2–8%, NPS 5–6, queda de pedidos ou &gt; 90 dias sem compra</td>
+                <td>Manter limite; desconto &gt; 3% exige aprovação</td>
+                <td>Cobrança preventiva quinzenal</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-red">Alto</span></td>
+                <td>Inativo, inad. &gt; 8%, NPS &lt; 5, atraso recorrente</td>
+                <td>Entrada 30% ou prazo máx. 15 dias</td>
+                <td>Cobrança prioritária; bloquear crédito</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Margem mínima por categoria</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Categoria</th>
+                <th class="num">Margem mínima</th>
+                <th>Aprovação se abaixo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Abrasivos</td><td class="num">35%</td><td>Gestor comercial (até −2 p.p.) / Financeiro</td></tr>
+              <tr><td>EPI</td><td class="num">33%</td><td>Idem</td></tr>
+              <tr><td>MRO</td><td class="num">30%</td><td>Idem</td></tr>
+              <tr><td>Hidráulica</td><td class="num">28%</td><td>Idem</td></tr>
+              <tr><td>Ferramentas</td><td class="num">27%</td><td>Idem</td></tr>
+              <tr><td><strong>Elétricos</strong></td><td class="num"><strong>22%</strong></td><td>Revisão de preço mensal obrigatória</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Regra:</strong> pedido abaixo da margem mínima não é liberado automaticamente — ERP bloqueia e encaminha para aprovação.</p>
+      </section>
+
+      <!-- IMPACTO -->
+      <section id="impacto">
+        <h2>5. Impacto financeiro estimado</h2>
+        <p>Base: receita líquida semestral de <strong>R$ 18.262.354</strong></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Alavanca</th>
+                <th class="num">Situação atual</th>
+                <th class="num">Meta</th>
+                <th class="num">Ganho (semestre)</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Frete / logística</td>
+                <td class="num">R$ 849.903 (4,7%)</td>
+                <td class="num">4,0%</td>
+                <td class="num"><strong style="color:var(--green)">+R$ 119.409</strong></td>
+                <td>Economia direta</td>
+              </tr>
+              <tr>
+                <td>Inadimplência</td>
+                <td class="num">R$ 2.182.214</td>
+                <td class="num">R$ 1.500.000</td>
+                <td class="num"><strong style="color:var(--green)">+R$ 200.000</strong></td>
+                <td>Recuperação e menor PDD</td>
+              </tr>
+              <tr>
+                <td>Devoluções</td>
+                <td class="num">R$ 1.047.395 (5,4%)</td>
+                <td class="num">3,5%</td>
+                <td class="num"><strong style="color:var(--green)">+R$ 147.000</strong></td>
+                <td>Receita recuperada líquida</td>
+              </tr>
+              <tr>
+                <td>Margem Elétricos</td>
+                <td class="num">~19,1%</td>
+                <td class="num">+2 p.p.</td>
+                <td class="num"><strong style="color:var(--green)">+R$ 54.000</strong></td>
+                <td>Sobre R$ 2,68 mi</td>
+              </tr>
+              <tr>
+                <td>DSO</td>
+                <td class="num">56 dias</td>
+                <td class="num">45 dias</td>
+                <td class="num">R$ 1.116.000</td>
+                <td>Caixa liberado (não lucro)</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"><strong>Margem líquida total: 1,0% → 3,0%</strong></td>
+                <td class="num"><strong>+R$ 362.000</strong></td>
+                <td>~R$ 730 mil/ano</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="highlight-box">
+          <strong>Prioridade de execução:</strong> 1º Frete → 2º Crédito → 3º Elétricos → 4º Devoluções
+        </div>
+      </section>
+
+      <!-- CRONOGRAMA -->
+      <section id="cronograma">
+        <h2>6. Cronograma (12 meses)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Fase</th><th>Período</th><th>Entregas</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Fase 1 — Quick wins</strong></td>
+                <td>Mês 1–2</td>
+                <td>Risco de clientes; bloqueio margem ERP; renegociação LogNorte; aging semanal</td>
+              </tr>
+              <tr>
+                <td><strong>Fase 2 — Estruturação</strong></td>
+                <td>Mês 3–6</td>
+                <td>Política de crédito; antecipação; auditoria devoluções; preços Elétricos</td>
+              </tr>
+              <tr>
+                <td><strong>Fase 3 — Consolidação</strong></td>
+                <td>Mês 7–12</td>
+                <td>Meta 3% margem; DSO 45 dias; revisão trimestral com diretoria</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CUSTOS -->
+      <section id="custos">
+        <h2>7. Custo e esforço de implantação</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ação</th>
+                <th>Responsável</th>
+                <th class="num">Esforço</th>
+                <th class="num">Custo</th>
+                <th>Prazo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Margem mínima no ERP</td><td>TI + Financeiro</td><td class="num">40 h</td><td class="num">R$ 0</td><td>3 semanas</td></tr>
+              <tr><td>Classificar 40 clientes</td><td>Financeiro + Comercial</td><td class="num">16 h</td><td class="num">R$ 0</td><td>2 semanas</td></tr>
+              <tr><td>Renegociar LogNorte</td><td>Logística + Financeiro</td><td class="num">24 h</td><td class="num">R$ 0</td><td>6 semanas</td></tr>
+              <tr><td>Treinamento comercial</td><td>Comercial + Financeiro</td><td class="num">8 h</td><td class="num">R$ 2.000</td><td>1 semana</td></tr>
+              <tr><td>Aging automatizado</td><td>TI</td><td class="num">20 h</td><td class="num">R$ 0</td><td>4 semanas</td></tr>
+              <tr><td>Desconto antecipação</td><td>Financeiro</td><td class="num">—</td><td class="num">~R$ 15k/sem</td><td>Contínuo</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2"><strong>Total</strong></td>
+                <td class="num"><strong>~108 h</strong></td>
+                <td class="num"><strong>~R$ 2.000</strong></td>
+                <td><strong>60 dias base</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p><strong>Payback:</strong> primeiro mês após quick wins de frete e crédito.</p>
+
+        <h3>Riscos e mitigação</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Risco</th><th>Mitigação</th></tr></thead>
+            <tbody>
+              <tr><td>Comercial resiste a menos desconto</td><td>Bonificar por margem; 1 p.p. = R$ 183 mil/semestre</td></tr>
+              <tr><td>Grandes clientes pressionam prazo</td><td>Garantia ou antecipação; não ceder sem aprovação</td></tr>
+              <tr><td>Crédito duro demais</td><td>Começar pelos 15 inadimplentes</td></tr>
+              <tr><td>LogNorte única opção</td><td>Renegociar SLA antes de trocar</td></tr>
+              <tr><td>E-commerce margem baixa</td><td>Frete mínimo e margem mínima no digital</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RESPONSÁVEIS -->
+      <section id="responsaveis">
+        <h2>8. Matriz de responsabilidades</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Ação</th><th>Dono</th><th>Prazo</th><th>Indicador de sucesso</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Classificar clientes por risco</td><td>Analista financeiro</td><td>Semana 2</td><td>100% dos 40 clientes</td></tr>
+              <tr><td>Bloquear pedidos abaixo da margem</td><td>TI + Gestor comercial</td><td>Semana 3</td><td>0 pedidos sem aprovação</td></tr>
+              <tr><td>Renegociar frete LogNorte</td><td>Coord. logística</td><td>Mês 2</td><td>Frete ≤ 4,2%</td></tr>
+              <tr><td>Desconto por antecipação</td><td>Financeiro</td><td>Mês 1</td><td>≥ 15% recebíveis ≤ 30 dias</td></tr>
+              <tr><td>Revisão preços Elétricos</td><td>Comercial + Financeiro</td><td>Mensal</td><td>Margem ≥ 21%</td></tr>
+              <tr><td>Relatório aging semanal</td><td>Analista financeiro</td><td>Semana 1</td><td>Toda segunda-feira</td></tr>
+              <tr><td>Auditoria de devoluções</td><td>Logística + Qualidade</td><td>Mensal</td><td>Taxa ≤ 4%</td></tr>
+              <tr><td>Meta margem líquida 3%</td><td>Diretor financeiro</td><td>Mês 12</td><td>Margem ≥ 3,0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- KPIs -->
+      <section id="kpis">
+        <h2>9. KPIs — como medir sucesso</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>KPI</th>
+                <th class="num">Atual</th>
+                <th class="num">Meta 6 meses</th>
+                <th class="num">Meta 12 meses</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Margem líquida</td><td class="num">1,0%</td><td class="num">2,0%</td><td class="num"><strong>3,0%</strong></td></tr>
+              <tr><td>Frete / receita líquida</td><td class="num">4,7%</td><td class="num">4,2%</td><td class="num"><strong>4,0%</strong></td></tr>
+              <tr><td>Inadimplência</td><td class="num">R$ 2,18 mi</td><td class="num">R$ 1,80 mi</td><td class="num"><strong>R$ 1,50 mi</strong></td></tr>
+              <tr><td>DSO (dias)</td><td class="num">56</td><td class="num">50</td><td class="num"><strong>45</strong></td></tr>
+              <tr><td>Devoluções / receita bruta</td><td class="num">5,4%</td><td class="num">4,0%</td><td class="num"><strong>3,5%</strong></td></tr>
+              <tr><td>Margem bruta Elétricos</td><td class="num">~19%</td><td class="num">21%</td><td class="num"><strong>23%</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- APRESENTAÇÃO -->
+      <section id="apresentacao">
+        <h2>10. Como apresentar (10–15 min)</h2>
+        <p>Formato: slides + oral. Dividir entre o grupo. Tempo total: <strong>10–15 min</strong> + 5 min de perguntas.</p>
+
+        <div class="slides">
+          <div class="slide-card">
+            <div class="slide-num">1</div>
+            <div>
+              <h4>Abertura</h4>
+              <p>"A Nexus faturou R$ 19 milhões em seis meses e lucrou R$ 186 mil. Nosso plano transforma esse faturamento em lucro real."</p>
+              <div class="time">30 segundos</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">2</div>
+            <div>
+              <h4>O problema</h4>
+              <p>3 números: R$ 19,3 mi · R$ 186 mil · 1,0%. Março, abril e maio no vermelho.</p>
+              <div class="time">1,5 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">3</div>
+            <div>
+              <h4>O que os dados mostraram</h4>
+              <p>Frete subindo · DSO 56 dias · Inadimplência R$ 2,18 mi · Top 3 = 41,6%</p>
+              <div class="time">2 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">4</div>
+            <div>
+              <h4>Nossa proposta</h4>
+              <p>Meta 1% → 3%. Cinco frentes: frete, crédito, margem, devoluções, recebimento.</p>
+              <div class="time">2 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">5</div>
+            <div>
+              <h4>Regras concretas ⭐ slide mais importante</h4>
+              <p>Tabela de risco + margem mínima. "Pedido abaixo da margem não sai sem aprovação."</p>
+              <div class="time">2 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">6</div>
+            <div>
+              <h4>Impacto em reais ⭐ a banca vai amar</h4>
+              <p>+R$ 362 mil/semestre · ~R$ 730 mil/ano. Mostrar tabela de alavancas.</p>
+              <div class="time">2 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">7</div>
+            <div>
+              <h4>Quem faz, quanto custa</h4>
+              <p>~R$ 2 mil + 108 h internas. Payback no 1º mês.</p>
+              <div class="time">1,5 min</div>
+            </div>
+          </div>
+          <div class="slide-card">
+            <div class="slide-num">8</div>
+            <div>
+              <h4>Riscos e fechamento</h4>
+              <p>"Crescimento financeiro, não só comercial. A Nexus já tem escala — agora precisa de disciplina."</p>
+              <div class="time">1 min</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Divisão sugerida (grupo de 4)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Pessoa</th><th>Parte</th><th class="num">Tempo</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Abertura + problema</td><td class="num">2 min</td></tr>
+              <tr><td>2</td><td>Diagnóstico dos dados</td><td class="num">2,5 min</td></tr>
+              <tr><td>3</td><td>Plano + regras concretas</td><td class="num">4 min</td></tr>
+              <tr><td>4</td><td>Impacto + custos + fechamento</td><td class="num">4 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Checklist antes de apresentar</h3>
+        <ul class="checklist">
+          <li>Slides prontos (8 slides)</li>
+          <li>Tabela de risco de clientes no slide</li>
+          <li>Tabela de impacto financeiro no slide</li>
+          <li>Respostas da banca estudadas (seção abaixo)</li>
+          <li>Exemplo de uso da IA preparado (30 segundos)</li>
+          <li>Ensaiar frase de abertura e fechamento</li>
+        </ul>
+      </section>
+
+      <!-- BANCA -->
+      <section id="banca">
+        <h2>11. Perguntas da banca — respostas prontas</h2>
+        <p>Responder <strong>curto e com número</strong>. Não enrolar.</p>
+
+        <div class="faq">
+          <details open>
+            <summary>Se a margem subir de 1% para 3%, quanto é em reais?</summary>
+            <div class="answer">
+              Sobre receita líquida de R$ 18,26 mi: 1% = R$ 186 mil · 3% = R$ 548 mil.<br>
+              <strong>Ganho: R$ 362 mil/semestre (~R$ 730 mil/ano)</strong>
+            </div>
+          </details>
+          <details>
+            <summary>Qual ação traz mais resultado primeiro?</summary>
+            <div class="answer">
+              <ol>
+                <li><strong>Frete</strong> — +R$ 119 mil, 30–60 dias</li>
+                <li><strong>Crédito</strong> — +R$ 200 mil</li>
+                <li><strong>Devoluções</strong> — +R$ 147 mil</li>
+                <li><strong>Elétricos</strong> — +R$ 54 mil (mais gradual)</li>
+              </ol>
+            </div>
+          </details>
+          <details>
+            <summary>Quanto economiza se frete cair de 4,7% para 4,0%?</summary>
+            <div class="answer">
+              Hoje: R$ 849.903 → Meta: R$ 730.494<br>
+              <strong>Economia: R$ 119.409/semestre</strong>
+            </div>
+          </details>
+          <details>
+            <summary>Como reduzir DSO de 56 para 45 sem perder grandes clientes?</summary>
+            <div class="answer">
+              <ul>
+                <li>Desconto 1,5% para pagamento em 7 dias (baixo risco)</li>
+                <li>Top 3: manter prazo, oferecer antecipação com taxa menor</li>
+                <li>Cobrança preventiva a partir do dia 40</li>
+              </ul>
+              Capital liberado: <strong>~R$ 1,1 milhão</strong>
+            </div>
+          </details>
+          <details>
+            <summary>Qual regra para bloquear crédito de inadimplentes?</summary>
+            <div class="answer">
+              Inad. &gt; 8% ou atraso &gt; 30 dias = alto risco. Novas vendas só com entrada 30% ou prazo máx. 15 dias. Começar pelos <strong>15 clientes inadimplentes</strong> — não bloquear o portfólio inteiro.
+            </div>
+          </details>
+          <details>
+            <summary>LogNorte é cara — qual transportadora substitui?</summary>
+            <div class="answer">
+              <div class="table-wrap" style="margin-top:0.5rem">
+                <table>
+                  <thead><tr><th>Rota</th><th>Transportadora</th><th>Motivo</th></tr></thead>
+                  <tbody>
+                    <tr><td>Serra Gaúcha</td><td><strong>RodoSerra</strong></td><td>Mais barata, 1,5% devolução</td></tr>
+                    <tr><td>SC urgente</td><td><strong>TransRapido</strong></td><td>Rápida, menos atraso</td></tr>
+                    <tr><td>E-commerce</td><td><strong>Encomenda</strong></td><td>Custo equilibrado</td></tr>
+                    <tr><td>Norte RS</td><td>LogNorte renegociada ou Encomenda &lt; R$ 15 mil</td><td>Só onde não há alternativa</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>Como convencer o comercial a aceitar menos desconto?</summary>
+            <div class="answer">
+              <ol>
+                <li>1 p.p. de margem = R$ 183 mil/semestre</li>
+                <li>Bonificar por margem contribuída, não volume</li>
+                <li>Aprovação em até 2 horas — não trava venda</li>
+                <li>Workshop de 4 h no mês 1</li>
+              </ol>
+            </div>
+          </details>
+          <details>
+            <summary>Quanto custa implantar?</summary>
+            <div class="answer">~R$ 2 mil + 108 horas internas em 60 dias. <strong>Payback no primeiro mês.</strong></div>
+          </details>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    Nexus Soluções Industriais · Plano Financeiro · AIHub CESURG · Material de estudo
+  </footer>
+
+</body>
+</html>
