@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionando para /roteiro</title>
+  <script>
+    (function () {
+      const path = window.location.pathname;
+      const base = path
+        .replace(/\/roteiro\/index\.html$/, "")
+        .replace(/\/roteiro\/?$/, "");
+      window.location.replace(base + "/07-folhas-impressao-grupo.html");
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecionando para o roteiro...</p>
+</body>
+</html>

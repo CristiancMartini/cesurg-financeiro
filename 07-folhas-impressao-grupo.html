@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roteiro Impresso - Grupo Financeiro Nexus</title>
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --accent: #111111;
+      --talita: #60a5fa;
+      --dudu: #34d399;
+      --julia: #c084fc;
+      --carol: #f59e0b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.4;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 16mm;
+      border-bottom: 1px dashed var(--line);
+      page-break-after: always;
+    }
+
+    .sheet:last-child { page-break-after: auto; }
+
+    .header {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .speaker-chip {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #111111;
+    }
+
+    .chip-talita { background: var(--talita); }
+    .chip-dudu { background: var(--dudu); }
+    .chip-julia { background: var(--julia); }
+    .chip-carol { background: var(--carol); }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: -0.3px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 12.5px;
+    }
+
+    .meta div {
+      border: 1px solid var(--line);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    h2 {
+      margin: 14px 0 6px;
+      font-size: 15px;
+    }
+
+    ul {
+      margin: 6px 0 8px 18px;
+      padding: 0;
+    }
+
+    li { margin: 4px 0; font-size: 13px; }
+
+    .fala {
+      border-left: 4px solid #111111;
+      background: #f8fafc;
+      padding: 8px 10px;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+
+    .script {
+      border: 2px solid #111111;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 10px 0;
+      background: #ffffff;
+    }
+
+    .script-title {
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+
+    .cue {
+      display: inline-block;
+      margin: 2px 0 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .cue-speak {
+      background: #e5e7eb;
+      border: 1px solid #9ca3af;
+      color: #111111;
+    }
+
+    .cue-slide {
+      background: #111111;
+      border: 1px solid #111111;
+      color: #ffffff;
+    }
+
+    .script p {
+      margin: 4px 0;
+      font-size: 13px;
+    }
+
+    .warn {
+      margin-top: 8px;
+      padding: 6px 8px;
+      border: 1px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .hooks {
+      margin-top: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .hooks-title {
+      margin: 0;
+      padding: 7px 10px;
+      background: #eef2ff;
+      border-bottom: 1px solid #cbd5e1;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    .hooks-row {
+      display: grid;
+      grid-template-columns: 62px 1fr 150px;
+      gap: 8px;
+      align-items: start;
+      padding: 7px 10px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 12.5px;
+    }
+
+    .hooks-row:last-child { border-bottom: none; }
+
+    .hooks-slide {
+      font-weight: bold;
+      color: #111111;
+    }
+
+    .hooks-gatilho {
+      font-weight: bold;
+      color: #1d4ed8;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .n {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .footer {
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .checklist {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .checklist p {
+      margin: 0 0 6px;
+      font-size: 12.5px;
+      font-weight: bold;
+    }
+
+    .checklist ul { margin-top: 0; }
+
+    .sheet.s-talita .header { border-bottom-color: var(--talita); }
+    .sheet.s-talita .script { border-color: var(--talita); }
+    .sheet.s-talita .hooks-title { background: #eff6ff; border-bottom-color: #bfdbfe; }
+    .sheet.s-talita .hooks-gatilho { color: #2563eb; }
+
+    .sheet.s-dudu .header { border-bottom-color: var(--dudu); }
+    .sheet.s-dudu .script { border-color: var(--dudu); }
+    .sheet.s-dudu .hooks-title { background: #ecfdf5; border-bottom-color: #a7f3d0; }
+    .sheet.s-dudu .hooks-gatilho { color: #047857; }
+
+    .sheet.s-julia .header { border-bottom-color: var(--julia); }
+    .sheet.s-julia .script { border-color: var(--julia); }
+    .sheet.s-julia .hooks-title { background: #faf5ff; border-bottom-color: #e9d5ff; }
+    .sheet.s-julia .hooks-gatilho { color: #7e22ce; }
+
+    .sheet.s-carol .header { border-bottom-color: var(--carol); }
+    .sheet.s-carol .script { border-color: var(--carol); }
+    .sheet.s-carol .hooks-title { background: #fffbeb; border-bottom-color: #fde68a; }
+    .sheet.s-carol .hooks-gatilho { color: #b45309; }
+
+    .sheet.s-banca .header { border-bottom-color: #64748b; }
+    .sheet.s-banca .script { border-color: #64748b; }
+    .sheet.s-banca .hooks-title { background: #f1f5f9; border-bottom-color: #cbd5e1; }
+    .sheet.s-banca .hooks-gatilho { color: #334155; }
+
+    @media print {
+      body { background: #ffffff; }
+      .sheet { border: none; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="sheet s-talita">
+    <div class="header">
+      <h1>Folha 1 - Talita</h1>
+      <p class="sub">Apresentacao Nexus | Parte 1 de 4 | Abertura e contexto</p>
+      <span class="speaker-chip chip-talita">Talita</span>
+    </div>
+
+    <div class="meta">
+      <div><strong>Tempo:</strong><br>2min30 a 3 min</div>
+      <div><strong>Slides:</strong><br>1 a 6</div>
+      <div><strong>Objetivo:</strong><br>Abrir e preparar o diagnostico</div>
+    </div>
+
+    <h2>Ordem da fala</h2>
+    <ul>
+      <li>Abre com o tema e posiciona o objetivo do grupo.</li>
+      <li>Mostra o impacto de faturamento: R$ 19,3 mi.</li>
+      <li>Faz a virada narrativa: empresa vende muito, mas precisa de disciplina financeira.</li>
+      <li>Conclui com o contexto de mercado e os 5 vazamentos de lucro.</li>
+    </ul>
+
+    <h2>Roteiro de fala com comando de slide</h2>
+    <div class="script">
+      <div class="script-title">Use exatamente nessa ordem</div>
+      <p><span class="cue cue-speak">FALAR - Slide 1</span> "Boa tarde, banca. Nos somos o grupo financeiro da Nexus."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (2)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 2</span> "No primeiro semestre de 2025, a empresa faturou <span class="n">R$ 19,3 milhoes</span>. Esse numero mostra escala comercial."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (3)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 3</span> "Mesmo com escala, a conversao em resultado e baixa."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (4)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 4</span> "A Nexus vende muito, mas quase nao lucra."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (5)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 5</span> "No mercado, a pressao por preco exige disciplina financeira."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (6)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 6</span> "Os cinco vazamentos explicam onde o lucro escapa."</p>
+      <p><span class="cue cue-speak">FALAR - TRANSICAO</span> "Agora o Dudu vai provar, com os numeros do diagnostico, onde estao os principais vazamentos."</p>
+      <div class="warn">ATENCAO: Talita vai ate o slide 6. Nao entrar nos numeros detalhados do diagnostico.</div>
+    </div>
+
+    <h2>Numeros que nao pode errar</h2>
+    <ul>
+      <li><span class="n">R$ 19,3 mi</span> de faturamento no semestre.</li>
+      <li>Mensagem-chave: escala ja existe, falta conversao em resultado.</li>
+      <li>Fechar apontando os 5 vazamentos (sem detalhar numero aqui).</li>
+    </ul>
+
+    <div class="hooks">
+      <p class="hooks-title">Gancho visual rapido (olhar para tela + palavra gatilho)</p>
+      <div class="hooks-row">
+        <span class="hooks-slide">S1</span>
+        <span>Titulo grande "Crescimento financeiro"</span>
+        <span class="hooks-gatilho">ABERTURA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S2</span>
+        <span>Numero gigante R$ 19,3 mi no centro</span>
+        <span class="hooks-gatilho">ESCALA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S3-S4</span>
+        <span>R$ 186 mil + frase de choque "quase nao lucra"</span>
+        <span class="hooks-gatilho">PROBLEMA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S5-S6</span>
+        <span>Mercado + 5 icones de vazamento</span>
+        <span class="hooks-gatilho">CONTEXTO</span>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <p>Checklist rapido da Talita</p>
+      <ul>
+        <li>[ ] Comecar com voz firme e ritmo calmo.</li>
+        <li>[ ] Olhar para a banca na frase de abertura.</li>
+        <li>[ ] Nao acelerar nos numeros.</li>
+      </ul>
+    </div>
+
+      <p class="footer">Tempo total alvo da apresentacao: 12 a 14 minutos.</p>
+  </section>
+
+
+  <section class="sheet s-dudu">
+    <div class="header">
+      <h1>Folha 2 - Dudu</h1>
+      <p class="sub">Apresentacao Nexus | Parte 2 de 4 | Diagnostico com numeros</p>
+      <span class="speaker-chip chip-dudu">Dudu</span>
+    </div>
+
+    <div class="meta">
+      <div><strong>Tempo:</strong><br>3 min</div>
+      <div><strong>Slides:</strong><br>7 a 10</div>
+      <div><strong>Objetivo:</strong><br>Provar o problema com dados</div>
+    </div>
+
+    <h2>Ordem da fala</h2>
+    <ul>
+      <li>Mostra a piora de frete: R$ 118 mil para R$ 171 mil/mes.</li>
+      <li>Mostra DSO de 56 dias e inadimplencia de R$ 2,18 mi.</li>
+      <li>Mostra concentracao de 41,6% em 3 clientes.</li>
+      <li>Fecha com queda de margem em Eletricos: 26% para 16%.</li>
+    </ul>
+
+    <h2>Roteiro de fala com comando de slide</h2>
+    <div class="script">
+      <div class="script-title">Use exatamente nessa ordem</div>
+      <p><span class="cue cue-speak">FALAR - Slide 7</span> "No diagnostico, o primeiro ponto critico e o frete: <span class="n">R$ 118 mil</span> para <span class="n">R$ 171 mil</span> por mes."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (8)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 8</span> "Segundo ponto: recebimento lento, com <span class="n">56 dias</span> de DSO e <span class="n">R$ 2,18 mi</span> de inadimplencia."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (9)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 9</span> "Terceiro ponto: concentracao de <span class="n">41,6%</span> em tres clientes."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (10)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 10</span> "Quarto ponto: Eletricos caiu de <span class="n">26%</span> para <span class="n">16%</span> de margem."</p>
+      <p><span class="cue cue-speak">FALAR - TRANSICAO</span> "Com esse diagnostico, a Julia vai apresentar a virada: sair de 1% para 3% com plano pratico."</p>
+      <div class="warn">ATENCAO: Dudu termina no slide 10. Nao antecipar o plano de acao da Julia.</div>
+    </div>
+
+    <h2>Numeros que nao pode errar</h2>
+    <ul>
+      <li><span class="n">R$ 118 mil -> R$ 171 mil</span> no frete mensal.</li>
+      <li><span class="n">56 dias</span> de DSO e <span class="n">R$ 2,18 mi</span> de inadimplencia.</li>
+      <li><span class="n">41,6%</span> concentrado em 3 clientes.</li>
+      <li>Eletricos: <span class="n">26% -> 16%</span>.</li>
+    </ul>
+
+    <div class="hooks">
+      <p class="hooks-title">Gancho visual rapido (olhar para tela + palavra gatilho)</p>
+      <div class="hooks-row">
+        <span class="hooks-slide">S7</span>
+        <span>Grafico de linha subindo no frete</span>
+        <span class="hooks-gatilho">FRETE</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S8</span>
+        <span>Relogio/anel com 56 dias + R$ 2,18 mi</span>
+        <span class="hooks-gatilho">CAIXA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S9</span>
+        <span>Barras de concentracao em 3 clientes</span>
+        <span class="hooks-gatilho">RISCO</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S10</span>
+        <span>Comparacao 26% vs 16% em Eletricos</span>
+        <span class="hooks-gatilho">MARGEM</span>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <p>Checklist rapido do Dudu</p>
+      <ul>
+        <li>[ ] Falar com tom de evidencia, nao de opiniao.</li>
+        <li>[ ] Mostrar causa e efeito em frases curtas.</li>
+        <li>[ ] Fechar abrindo para a solucao.</li>
+      </ul>
+    </div>
+
+    <p class="footer">Regra de ouro: diagnostico curto e numerico.</p>
+  </section>
+
+
+  <section class="sheet s-julia">
+    <div class="header">
+      <h1>Folha 3 - Julia</h1>
+      <p class="sub">Apresentacao Nexus | Parte 3 de 4 | Virada e plano de execucao</p>
+      <span class="speaker-chip chip-julia">Julia</span>
+    </div>
+
+    <div class="meta">
+      <div><strong>Tempo:</strong><br>3min30</div>
+      <div><strong>Slides:</strong><br>11 a 17</div>
+      <div><strong>Objetivo:</strong><br>Mostrar como executar</div>
+    </div>
+
+    <h2>Ordem da fala</h2>
+    <ul>
+      <li>Apresenta a meta central: 1% para 3% em 12 meses.</li>
+      <li>Mostra as 5 frentes de acao.</li>
+      <li>Detalha credito por risco: R$ 2,18 mi para R$ 1,50 mi.</li>
+      <li>Detalha regra de margem minima e bloqueio sem aprovacao.</li>
+      <li>Fecha com DSO meta de 45 dias e R$ 1,1 mi liberados.</li>
+    </ul>
+
+    <h2>Roteiro de fala com comando de slide</h2>
+    <div class="script">
+      <div class="script-title">Use exatamente nessa ordem</div>
+      <p><span class="cue cue-speak">FALAR - Slide 11</span> "A virada proposta e clara: margem de <span class="n">1% para 3%</span> em 12 meses."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (12)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 12</span> "O plano tem cinco frentes: frete, credito, margem minima, devolucoes e caixa."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (13)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 13</span> "Frete e o quick win operacional."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (14)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 14</span> "No credito, a meta e reduzir inadimplencia de <span class="n">R$ 2,18 mi</span> para <span class="n">R$ 1,50 mi</span>."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (15)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 15</span> "Regra central: pedido abaixo da margem minima nao sai sem aprovacao."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (16)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 16</span> "Em devolucoes, o ganho projetado e <span class="n">+R$ 147 mil</span>."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (17)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 17</span> "No caixa, meta de <span class="n">45 dias</span> de DSO, liberando <span class="n">R$ 1,1 mi</span>."</p>
+      <p><span class="cue cue-speak">FALAR - TRANSICAO</span> "A Carol fecha com impacto total, retorno financeiro, cronograma e encerramento."</p>
+      <div class="warn">ATENCAO: Julia termina no slide 17. Nao entrar no impacto consolidado de R$ 362 mil.</div>
+    </div>
+
+    <h2>Numeros e regras que nao pode errar</h2>
+    <ul>
+      <li>Meta central: <span class="n">1% -> 3%</span>.</li>
+      <li>Credito: <span class="n">R$ 2,18 mi -> R$ 1,50 mi</span>.</li>
+      <li>Regra de margem: Eletricos <span class="n">22%</span> de referencia minima.</li>
+      <li>Devolucoes: ganho exibido no slide de <span class="n">+R$ 147 mil</span>.</li>
+      <li>DSO: <span class="n">45 dias</span> e <span class="n">R$ 1,1 mi</span> liberados.</li>
+    </ul>
+
+    <div class="hooks">
+      <p class="hooks-title">Gancho visual rapido (olhar para tela + palavra gatilho)</p>
+      <div class="hooks-row">
+        <span class="hooks-slide">S11</span>
+        <span>Seta 1% para 3% no centro</span>
+        <span class="hooks-gatilho">VIRADA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S12-S13</span>
+        <span>Cards das 5 frentes + frete quick win</span>
+        <span class="hooks-gatilho">PLANO</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S14-S15</span>
+        <span>Risco baixo/medio/alto + bloqueio de margem</span>
+        <span class="hooks-gatilho">REGRA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S16-S17</span>
+        <span>+R$ 147 mil e anel de 45 dias</span>
+        <span class="hooks-gatilho">EXECUCAO</span>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <p>Checklist rapido da Julia</p>
+      <ul>
+        <li>[ ] Evitar teoria longa; focar em regra pratica.</li>
+        <li>[ ] Reforcar que o plano e executavel com equipe atual.</li>
+        <li>[ ] Entregar para a Carol com energia de fechamento.</li>
+      </ul>
+    </div>
+
+    <p class="footer">Este bloco e o coracao tecnico da apresentacao.</p>
+  </section>
+
+
+  <section class="sheet s-carol">
+    <div class="header">
+      <h1>Folha 4 - Carol</h1>
+      <p class="sub">Apresentacao Nexus | Parte 4 de 4 | Impacto final e fechamento</p>
+      <span class="speaker-chip chip-carol">Carol</span>
+    </div>
+
+    <div class="meta">
+      <div><strong>Tempo:</strong><br>3min30 a 4 min</div>
+      <div><strong>Slides:</strong><br>18 a 25</div>
+      <div><strong>Objetivo:</strong><br>Fechar com retorno e confianca</div>
+    </div>
+
+    <h2>Ordem da fala</h2>
+    <ul>
+      <li>Mostra o impacto consolidado em reais.</li>
+      <li>Mostra custo de implantacao e payback.</li>
+      <li>Apresenta cronograma, prioridade e riscos mapeados.</li>
+      <li>Fecha com a frase final e abre perguntas.</li>
+    </ul>
+
+    <h2>Roteiro de fala com comando de slide</h2>
+    <div class="script">
+      <div class="script-title">Use exatamente nessa ordem</div>
+      <p><span class="cue cue-speak">FALAR - Slide 18</span> "Consolidando os resultados: <span class="n">+R$ 362 mil por semestre</span> e <span class="n">~R$ 730 mil por ano</span>."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (19)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 19</span> "O investimento exibido e de <span class="n">R$ 2 mil</span>, com payback rapido."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (20)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 20</span> "Execucao em <span class="n">12 meses</span>, em tres fases."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (21)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 21</span> "Aqui esta a ordem de prioridade da implantacao."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (22)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 22</span> "Os riscos estao mapeados com mitigacao definida."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (23)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 23</span> "A IA foi acelerador de analise, nao substituto da decisao do grupo."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (24)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 24</span> "A Nexus ja tem escala. Agora precisa de disciplina financeira."</p>
+      <p><span class="cue cue-slide">PASSA SLIDE (25)</span></p>
+      <p><span class="cue cue-speak">FALAR - Slide 25</span> "Obrigada. Ficamos a disposicao para perguntas da banca."</p>
+      <div class="warn">ATENCAO: Carol conduz ate o fim e abre Q&A no slide 25.</div>
+    </div>
+
+    <h2>Numeros que nao pode errar</h2>
+    <ul>
+      <li><span class="n">+R$ 362 mil/semestre</span>.</li>
+      <li><span class="n">~R$ 730 mil/ano</span>.</li>
+      <li>Custo exibido: <span class="n">R$ 2 mil</span>.</li>
+      <li>Cronograma: <span class="n">12 meses</span>.</li>
+    </ul>
+
+    <div class="hooks">
+      <p class="hooks-title">Gancho visual rapido (olhar para tela + palavra gatilho)</p>
+      <div class="hooks-row">
+        <span class="hooks-slide">S18-S19</span>
+        <span>Barras de impacto + comparacao investimento x retorno</span>
+        <span class="hooks-gatilho">RETORNO</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S20-S21</span>
+        <span>Timeline 12 meses + escada de prioridade</span>
+        <span class="hooks-gatilho">RITMO</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S22-S23</span>
+        <span>Riscos com mitigacao + slide de IA</span>
+        <span class="hooks-gatilho">CONFIANCA</span>
+      </div>
+      <div class="hooks-row">
+        <span class="hooks-slide">S24-S25</span>
+        <span>Frase final + obrigado e perguntas</span>
+        <span class="hooks-gatilho">FECHAMENTO</span>
+      </div>
+    </div>
+
+    <h2>Fechamento final (decorar)</h2>
+    <div class="fala">
+      "Crescimento financeiro, nao so comercial. A Nexus ja tem escala; agora precisa de disciplina financeira. Obrigada."
+    </div>
+
+    <div class="checklist">
+      <p>Checklist rapido da Carol</p>
+      <ul>
+        <li>[ ] Falar os ganhos com seguranca.</li>
+        <li>[ ] Fazer pausa curta antes da frase final.</li>
+        <li>[ ] Encerrar sorrindo e abrindo para perguntas.</li>
+      </ul>
+    </div>
+
+      <p class="footer">Tempo total estimado: 12min30 a 14min30. Dentro da janela de 10-15min.</p>
+  </section>
+
+  <section class="sheet s-banca">
+    <div class="header">
+      <h1>Perguntas Bate-Pronto</h1>
+      <p class="sub">Guia rapido para resposta da banca | Metodologia, ferramentas e perguntas genericas</p>
+      <span class="speaker-chip" style="background:#cbd5e1;">Q&A</span>
+    </div>
+
+    <div class="meta">
+      <div><strong>Objetivo:</strong><br>Responder curto e seguro</div>
+      <div><strong>Regra:</strong><br>1 ideia + 1 numero</div>
+      <div><strong>Tempo por resposta:</strong><br>20 a 40 segundos</div>
+    </div>
+
+    <h2>Como fizemos (pedido da banca)</h2>
+    <div class="script">
+      <div class="script-title">Resposta pronta - metodologia</div>
+      <p>"A gente trabalhou em duas frentes: diagnostico financeiro e comunicacao. Montamos os slides e a pagina de estudo na IDE do Cursor, recomendada por um amigo desenvolvedor, para manter tudo organizado no mesmo projeto e acelerar as iteracoes."</p>
+    </div>
+
+    <div class="script">
+      <div class="script-title">Resposta pronta - o que e o Cursor</div>
+      <p>"Cursor e uma IDE com suporte a varios agentes de IA no mesmo fluxo de trabalho. Ela consegue manter contexto amplo do projeto, dos arquivos e das decisoes anteriores, o que ajuda a transformar analise em entrega pratica com mais consistencia e velocidade."</p>
+    </div>
+
+    <div class="script">
+      <div class="script-title">Resposta pronta - analise de dados</div>
+      <p>"Na analise, cruzamos vendas, clientes e financeiro. Calculamos margem, frete, inadimplencia, DSO e concentracao, e depois validamos os numeros em revisao cruzada do grupo antes de fechar o plano."</p>
+    </div>
+
+    <div class="script">
+      <div class="script-title">Resposta pronta - credito de ideias</div>
+      <p>"As ideias e prioridades sao do grupo, com base no contexto da empresa e nos dados do semestre. A IA foi usada pontualmente para acelerar estrutura e revisar clareza, mas a autoria do plano, validacao dos numeros e decisao final sao nossas."</p>
+    </div>
+
+    <h2>Perguntas genericas que a banca pode fazer</h2>
+    <ul>
+      <li><strong>Por que escolheram esse problema e nao outro?</strong><br>Porque ele tinha maior impacto financeiro direto no semestre e maior potencial de retorno no curto prazo.</li>
+      <li><strong>Como garantem que os dados estao corretos?</strong><br>Conferimos os calculos manualmente e cruzamos entre os tres arquivos-base antes de fechar os numeros.</li>
+      <li><strong>Se os dados mudarem no proximo semestre, o plano ainda vale?</strong><br>Vale como estrutura. O que muda sao os alvos numericos, que devem ser recalibrados no acompanhamento mensal.</li>
+      <li><strong>Qual a maior limitacao da analise?</strong><br>A base e de um semestre; por isso propomos revisao mensal e ajuste continuo de metas.</li>
+      <li><strong>O que fariam diferente com mais tempo?</strong><br>Aprofundariamos simulacoes por cliente/categoria e testariamos cenarios com sensibilidade de preco e prazo.</li>
+      <li><strong>Como medem se o plano deu certo?</strong><br>Pelos KPIs: margem liquida, frete/receita, inadimplencia, DSO e devolucoes, com checkpoint mensal.</li>
+      <li><strong>Qual risco pode derrubar o plano?</strong><br>Resistencia comercial; por isso amarramos governanca, aprovacao e incentivo por margem.</li>
+    </ul>
+
+    <h2>Bate-pronto de fechamento (quando apertarem)</h2>
+    <div class="fala">
+      "Se precisarmos resumir em uma frase: usamos tecnologia para acelerar, mas decisao foi humana e baseada em dado. O plano e simples, executavel e focado em resultado."
+    </div>
+
+    <div class="checklist">
+      <p>Checklist da resposta em banca</p>
+      <ul>
+        <li>[ ] Responder curto (sem enrolar).</li>
+        <li>[ ] Citar 1 numero de apoio.</li>
+        <li>[ ] Focar em metodo + dado + acao pratica.</li>
+        <li>[ ] Fechar com acao pratica do plano.</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>

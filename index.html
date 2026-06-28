@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Plano Financeiro de Crescimento — Nexus Soluções Industriais. Material de estudo para apresentação AIHub CESURG.">
   <title>Plano Financeiro Nexus — Material de Estudo</title>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const keepStudyPage = params.get("estudo") === "1";
+      if (keepStudyPage) return;
+
+      const path = window.location.pathname;
+      const looksLikeRoot = path.endsWith("/") || path.endsWith("/index.html");
+      if (!looksLikeRoot) return;
+
+      const rawBase = path.endsWith("/index.html")
+        ? path.slice(0, -"/index.html".length)
+        : path;
+      const base = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
+      window.location.replace(base + "/slides.html");
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
